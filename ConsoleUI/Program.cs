@@ -9,16 +9,39 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            Console.Write("Max Fiyata Göre Listele : ");
-            int unitValue = Convert.ToInt32(Console.ReadLine());
             ProductManager productManager = new ProductManager(new EfProductDal());
-            foreach (var item in productManager.GetByUnitPrice(unitValue))
+            foreach (var item in productManager.GetProductDetails())
             {
-                Console.WriteLine("Max "+unitValue+" değerindeki ürünler.");
-                Console.Write(item.ProductName);
-                Console.WriteLine(" Fiyatı : "+item.UnitPrice);
+
+                Console.WriteLine(item.ProductName + "/" + item.CategoryName);
             }
-          
+            Console.ReadKey();
+            //ProductTest();
+
+            // CategoryTest();
+
+        }
+
+        private static void CategoryTest()
+        {
+            //IoC ? 
+            CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+            foreach (var category in categoryManager.GetAll())
+            {
+                Console.WriteLine(category.CategoryName);
+            }
+        }
+
+        private static void ProductTest()
+        {
+            
+            ProductManager productManager = new ProductManager(new EfProductDal());
+            foreach (var item in productManager.GetProductDetails())
+            {
+               
+                Console.WriteLine(item.ProductName+"/"+item.CategoryName);
+            }
+            Console.ReadKey();
         }
     }
 }
