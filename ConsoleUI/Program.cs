@@ -10,11 +10,20 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
-            foreach (var item in productManager.GetProductDetails())
+            var result = productManager.GetProductDetails();
+            if (result.Success)
             {
-
-                Console.WriteLine(item.ProductName + "/" + item.CategoryName);
+                foreach (var item in result.Data)
+                {
+                    Console.WriteLine(item.ProductName + "/" + item.CategoryName);
+                }
+                Console.Write(result.Message);
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
             Console.ReadKey();
             //ProductTest();
 
@@ -35,13 +44,7 @@ namespace ConsoleUI
         private static void ProductTest()
         {
             
-            ProductManager productManager = new ProductManager(new EfProductDal());
-            foreach (var item in productManager.GetProductDetails())
-            {
-               
-                Console.WriteLine(item.ProductName+"/"+item.CategoryName);
-            }
-            Console.ReadKey();
+           
         }
     }
 }
